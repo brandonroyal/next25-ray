@@ -1,3 +1,17 @@
+# training libraries
+import os
+import numpy as np
+import torch
+from huggingface_hub import login
+import datasets
+import transformers
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, Seq2SeqTrainingArguments
+from peft import LoraConfig
+from trl import SFTTrainer
+import evaluate
+import ray
+import ray.train.huggingface.transformers
+
 # libraries
 import argparse
 
@@ -19,6 +33,40 @@ from trl import SFTTrainer
 import evaluate
 # import ray
 import ray.train.huggingface.transformers
+
+# libraries
+import argparse
+
+# training libraries
+# from train import train_func
+
+# ray libraries
+import ray
+import ray.train.huggingface.transformers
+from ray.train import ScalingConfig, RunConfig, CheckpointConfig
+from ray.train.torch import TorchTrainer
+
+
+# helpers
+def get_args():
+    parser = argparse.ArgumentParser(description='Supervised tuning Gemma on Ray on GKE')
+
+    # some gemma parameters
+    parser.add_argument("--train_batch_size", type=int, default=1, help="train batch size")
+    parser.add_argument("--eval_batch_size", type=int, default=1, help="eval batch size")
+    parser.add_argument("--gradient_accumulation_steps", type=int, default=4, help="gradient accumulation steps")
+    parser.add_argument("--learning_rate", type=float, default=2e-4, help="learning rate")
+    parser.add_argument("--max_steps", type=int, default=100, help="max steps")
+    parser.add_argument("--save_steps", type=int, default=10, help="save steps")
+    parser.add_argument("--logging_steps", type=int, default=10, help="logging steps")
+
+    # ray parameters
+    parser.add_argument('--num-workers', dest='num_workers', type=int, default=1, help='Number of workers')
+    parser.add_argument('--use-gpu', dest='use_gpu', action='store_true', default=False, help='Use GPU')
+    parser.add_argument('--experiment-name', dest='experiment_name', type=str, default='gemma-on-rov', help='Experiment name')
+    parser.add_argument('--logging-dir', dest='logging_dir', type=str, help='Logging directory')
+    args = parser.parse_args()
+    return args
 
 # train
 def train_func(config):

@@ -1,0 +1,10 @@
+apiVersion: cloud.google.com/v1
+kind: ComputeClass
+metadata:
+  name: my-class
+spec:
+  priorities:
+  - gpu:
+      type: nvidia-l4
+      count: 1
+    spot: false
