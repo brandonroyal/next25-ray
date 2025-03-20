@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-alrxtvls
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: daemonset-alrxtvls
+  template:
+    metadata:
+      labels:
+        app: daemonset-alrxtvls
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - while true; do sleep 3600; done
+        image: busybox
+        name: busybox

@@ -5,6 +5,9 @@
 * Update to "inference" namespace
 
 ## Demo
+
+### Scene 1
+
 1. Show variety of workloads on existing cluster `demo-cluster` in Pantheon - existing deployments, jobs, etc.
 
 2. Update existing cluster to support Ray workloads in Pantheon
@@ -14,14 +17,14 @@
 4. Enable ML Engineers to submit Ray Jobs - deploy a Ray Cluster from the CLI with two commands
 
 ```bash
-kubectl ray create cluster ml --worker-replicas 3 --worker-cpu 1 --worker-gpu 1
+kubectl ray create cluster ml --worker-replicas 3 --worker-cpu 1 --worker-gpu 1 --image rayproject/ray:2.41.0-py312-gpu
 ```
 
 ```bash
 kubectl ray session raycluster/ml
 ```
 
-5. Open Notebook and show how easy it is for users to do ray
+5. Open Notebook and show how easy it is for users to connect to ray for 
 
 Run a Job
 ```bash
@@ -82,6 +85,13 @@ kubectl ray version
 $ sudo pip install ray[default]
 ```
 
+```bash
+# persist installation when cloud shell reboots
+cat <<'EOF' >> "$HOME/.customize_environment"
+echo "installing ray"
+sudo pip install ray[default]
+EOF
+```
 <!-- 3. Install Kubernetes Python client
 
 ```bash
@@ -109,10 +119,7 @@ export CLUSTER_NAME=demo-cluster
 Create GKE Cluster
 ```bash
 gcloud container clusters create $CLUSTER_NAME \
-  --location $ZONE \
-  --addons=RayOperator \
-  --enable-ray-cluster-logging \
-  --enable-ray-cluster-monitoring
+  --location $ZONE
 ```
 
 Create a GPU node pool
@@ -150,16 +157,20 @@ kubectl ray job submit --dry-run --name rayjob-sample --ray-version 2.41.0 --ima
 export CLOUDSDK_API_ENDPOINT_OVERRIDES_CONTAINER=https://test-container.sandbox.googleapis.com/
 
 
-export PROJECT_NAME=broyal-serviceproject1
-export CLUSTER_NAME=flex-start-demo-cluster
+<!-- export PROJECT_NAME=gke-batch-team -->
+export PROJECT_NAME=pkepka-gke-dev
+export CLUSTER_NAME=next-fs-demo-cluster
 export LOCATION=us-central1-a
 export MACHINE_TYPE=g2-standard-8
 export ACCELERATOR_COUNT=1
 export ACCELERATOR_TYPE=nvidia-l4
 export COMPUTE_CLASS_NAME=gpu-class
 
+<!-- gcloud compute networks create broyal-default --project=gke-batch-team --subnet-mode=auto -->
+
 gcloud container clusters create ${CLUSTER_NAME} \
   --zone ${LOCATION} \
+
   --project ${PROJECT_NAME} \
   --cluster-version 1.32.2-gke.1475000
 

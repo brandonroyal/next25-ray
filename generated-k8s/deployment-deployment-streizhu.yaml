@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-streizhu
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-streizhu
+  template:
+    metadata:
+      labels:
+        app: deployment-streizhu
+    spec:
+      containers:
+      - image: nginx
+        name: nginx

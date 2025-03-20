@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-olcpyhlx
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: daemonset-olcpyhlx
+  template:
+    metadata:
+      labels:
+        app: daemonset-olcpyhlx
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - while true; do sleep 3600; done
+        image: busybox
+        name: busybox

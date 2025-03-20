@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-azpekyet
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: deployment-azpekyet
+  template:
+    metadata:
+      labels:
+        app: deployment-azpekyet
+    spec:
+      containers:
+      - image: nginx:1
+        name: nginx

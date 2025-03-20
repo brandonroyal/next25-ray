@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-akgcjvgy
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: deployment-akgcjvgy
+  template:
+    metadata:
+      labels:
+        app: deployment-akgcjvgy
+    spec:
+      containers:
+      - image: nginx
+        name: nginx

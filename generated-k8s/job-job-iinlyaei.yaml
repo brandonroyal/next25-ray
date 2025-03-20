@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-iinlyaei
+  namespace: default
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      containers:
+      - command:
+        - /bin/bash
+        - -c
+        - echo 'Job executed successfully'
+        image: ubuntu:22.04
+        name: ubuntu
+      restartPolicy: Never

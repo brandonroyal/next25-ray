@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-wmucwfvv
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deployment-wmucwfvv
+  template:
+    metadata:
+      labels:
+        app: deployment-wmucwfvv
+    spec:
+      containers:
+      - image: nginx:1
+        name: nginx
